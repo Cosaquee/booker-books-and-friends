@@ -9,4 +9,6 @@
   :ring {:handler booker-books.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                        [clj-http "3.7.0"]
+                        [ring-cors "0.1.11"]
                         [ring/ring-mock "0.3.0"]]}})
