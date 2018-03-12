@@ -14,7 +14,8 @@
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [clj-http "3.7.0"]
                         [ring-cors "0.1.11"]
+                        [ring/ring-json "0.4.0"]
                         [org.clojure/core.match "0.3.0-alpha5"]
+                        [clojurewerkz/neocons "3.2.0"]
                         [org.clojure/data.json "0.2.6"]
                         [ring/ring-mock "0.3.0"]]}})
-

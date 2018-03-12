@@ -6,10 +6,13 @@
             [clojure.core.match :refer [match]]
             [clojure.data.json :as json]
             [ring.middleware.cors :refer [wrap-cors]]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
+            [ring.middleware.json :refer [wrap-json-body]]
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [booker-books.author-handler :as authors]))
 
 (defroutes app-routes
-  (GET "/authors" [] "Hello World")
+  (GET "/author" req authors/all)
+  (POST "/author" [request] authors/create)
   (route/not-found "Not Found"))
 
 ;; TODO: Error handling
@@ -26,6 +29,7 @@
 (def app
   (-> app-routes
       (check-auth)
+      (wrap-json-body {:keywords? true :bigdecimals? true})
       (wrap-cors :access-control-allow-origin [#"http://localhost:8080"]
                  :access-control-allow-methods [:get :put :post :delete :OPTIONS])
       (wrap-defaults api-defaults)))
