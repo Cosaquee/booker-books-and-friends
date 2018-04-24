@@ -8,11 +8,13 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.json :refer [wrap-json-body]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
-            [booker-books.author-handler :as authors]))
+            [booker-books.author-handler :as authors]
+            [booker-books.friends-handler :as friends]))
 
 (defroutes app-routes
   (GET "/author" req authors/all)
   (POST "/author" [request] authors/create)
+  (POST "/friends" [request] friends/create-friendship)
   (route/not-found "Not Found"))
 
 ;; TODO: Error handling
