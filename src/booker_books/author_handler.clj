@@ -7,6 +7,7 @@
             [clojurewerkz.neocons.rest.cypher :as cy]))
 
 (def conn (nr/connect "http://neo4j:password@localhost:7474/db/data/"))
+
 ;;Queries
 (def fetch-author-query "MATCH (author {type: 'author'}) return author")
 

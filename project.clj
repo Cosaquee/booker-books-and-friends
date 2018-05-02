@@ -18,4 +18,5 @@
                         [org.clojure/core.match "0.3.0-alpha5"]
                         [clojurewerkz/neocons "3.2.0"]
                         [org.clojure/data.json "0.2.6"]
-                        [ring/ring-mock "0.3.0"]]}})
+                        [ring/ring-mock "0.3.0"]
+                        [org.clojure/tools.logging "0.4.0"]]}})

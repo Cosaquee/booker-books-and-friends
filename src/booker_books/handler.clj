@@ -15,6 +15,7 @@
   (GET "/author" req authors/all)
   (POST "/author" [request] authors/create)
   (POST "/friends" [request] friends/create-friendship)
+  (GET "/check-friendship/:current_user_id/:friend_id" [current_user_id friend_id] friends/check-friendship)
   (route/not-found "Not Found"))
 
 ;; TODO: Error handling
@@ -25,8 +26,7 @@
         (let [response (http/post "http://localhost:4000/auth" {:content-type :json :body (json/write-str {:token token})})]
           (match [(get (json/read-str (get response :body)) "success")]
                  [true] (handler request)
-                 [false] (println "Something went wrong")))
-      ))))
+                 [false] (println "Something went wrong")))))))
 
 (def app
   (-> app-routes
