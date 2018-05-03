@@ -15,6 +15,7 @@
   (GET "/author" req authors/all)
   (POST "/author" [request] authors/create)
   (POST "/friends" [request] friends/create-friendship)
+  (GET "/friends/:user_id" [request] friends/fetch-friends)
   (GET "/check-friendship/:current_user_id/:friend_id" [current_user_id friend_id] friends/check-friendship)
   (route/not-found "Not Found"))
 

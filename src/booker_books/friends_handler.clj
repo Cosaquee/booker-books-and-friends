@@ -18,6 +18,8 @@
 
 (def check-friendship-query "MATCH (a:User {id: {current_user_id}}), (friend:User {id: {friend_id}}) RETURN EXISTS ((a)-[:IS_FRIEND]-(friend))")
 
+(def fetch-user-friends-query "MATCH (a:User {id: {id}})-[:IS_FRIEND]-(friends) RETURN friends")
+
 (defn check-friendship
   [request]
   (let [current_user_id (Integer/parseInt (get-in request [:route-params :current_user_id]))
@@ -40,3 +42,12 @@
       (ensure-users [user_id friend_id])
       (cy/tquery conn create-friendship-query {:current_user_id user_id, :friend_id friend_id}))))
 
+(defn get-friend
+  [friend]
+  (get-in friend ["friends" :data :id]))
+
+(defn fetch-friends
+  [request]
+  (let [user_id (Integer/parseInt (get-in request [:route-params :user_id]))]
+    (let [response (cy/tquery conn fetch-user-friends-query {:id user_id})]
+      (response/response (json/write-str (map get-friend response))))))
