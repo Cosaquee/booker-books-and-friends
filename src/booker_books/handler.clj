@@ -13,6 +13,8 @@
 
 (defroutes app-routes
   (GET "/author" req authors/all)
+  (GET "/author/search" [request] authors/search)
+  (GET "/author/:id" [request] authors/fetch)
   (POST "/author" [request] authors/create)
   (POST "/friends" [request] friends/create-friendship)
   (GET "/friends/:user_id" [request] friends/fetch-friends)
