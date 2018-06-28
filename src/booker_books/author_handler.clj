@@ -1,11 +1,11 @@
 (ns booker-books.author-handler
   (:require
    [clojure.tools.logging :as log]
-            [clojure.data.json :as json]
-            [clojurewerkz.neocons.rest :as nr]
-            [clojurewerkz.neocons.rest.nodes :as nn]
-            [ring.util.response :as response]
-            [clojurewerkz.neocons.rest.cypher :as cy]))
+   [clojure.data.json :as json]
+   [clojurewerkz.neocons.rest :as nr]
+   [clojurewerkz.neocons.rest.nodes :as nn]
+   [ring.util.response :as response]
+   [clojurewerkz.neocons.rest.cypher :as cy]))
 
 (def conn (nr/connect "http://neo4j:password@localhost:7474/db/data/"))
 
@@ -31,14 +31,13 @@
       (log/debug "Query response of fetching author is" query-response)
       (response/response (json/write-str (get-response (first query-response)))))))
 
-
 (defn search
   [request]
-    (log/info "booker-books.author-handler/search")
+  (log/info "booker-books.author-handler/search")
   (let [query (get request :query-string)]
     (let [query-response (cy/tquery conn search-query {:name query :surname query})]
       (response/response (json/write-str (map get-response query-response))))))
-    
+
 (defn create
   [request]
   (let [params (get request :body)]
@@ -47,9 +46,9 @@
           description (get params :description)
           birthDate (get params :birthDate)]
       (let [response  (cy/tquery conn create-author {:name name,
-                                     :surname surname,
-                                     :avatar_url (str "https://api.adorable.io/avatars/285/" (rand-int 300))
-                                     :description description})]
+                                                     :surname surname,
+                                                     :avatar_url (str "https://api.adorable.io/avatars/285/" (rand-int 300))
+                                                     :description description})]
         (response/response (json/write-str (get-response (first response))))))))
 
 (defn get-author

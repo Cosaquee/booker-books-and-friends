@@ -28,8 +28,8 @@
       (let [token (last (str/split token-header #" "))]
         (let [response (http/post "http://localhost:4000/auth" {:content-type :json :body (json/write-str {:token token})})]
           (match [(get (json/read-str (get response :body)) "success")]
-                 [true] (handler request)
-                 [false] (println "Something went wrong")))))))
+            [true] (handler request)
+            [false] (println "Something went wrong")))))))
 
 (def app
   (-> app-routes
