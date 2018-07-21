@@ -12,7 +12,7 @@
 ;;Queries
 (def fetch-author-query "MATCH (author:Author) WHERE id(author) = {id} RETURN author")
 
-(def create-author "MERGE (author:Author {name: {name}, surname: {surname}, avatar_url: {avatar_url}, description: {description}}) RETURN author")
+(def create-author "MERGE (author:Author {name: {name}, surname: {surname}, full_name: {full_name}, avatar_url: {avatar_url}, description: {description}}) RETURN author")
 
 (def search-query "MATCH (author:Author) WHERE author.name CONTAINS {name} OR author.surname CONTAINS {surname} RETURN author")
 
@@ -48,6 +48,7 @@
       (let [response  (cy/tquery conn create-author {:name name,
                                                      :surname surname,
                                                      :avatar_url (str "https://api.adorable.io/avatars/285/" (rand-int 300))
+                                                     :full_name, (str name " " surname)
                                                      :description description})]
         (response/response (json/write-str (get-response (first response))))))))
 

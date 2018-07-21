@@ -8,8 +8,10 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.json :refer [wrap-json-body]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [ring.util.response :as response]
             [booker-books.author-handler :as authors]
-            [booker-books.friends-handler :as friends]))
+            [booker-books.friends-handler :as friends]
+            [booker-books.books-handler :as books]))
 
 (defroutes app-routes
   (GET "/author" req authors/all)
@@ -19,6 +21,7 @@
   (POST "/friends" [request] friends/create-friendship)
   (GET "/friends/:user_id" [request] friends/fetch-friends)
   (GET "/check-friendship/:current_user_id/:friend_id" [current_user_id friend_id] friends/check-friendship)
+  (POST "/book" [request] books/create)
   (route/not-found "Not Found"))
 
 ;; TODO: Error handling
@@ -29,7 +32,7 @@
         (let [response (http/post "http://localhost:4000/auth" {:content-type :json :body (json/write-str {:token token})})]
           (match [(get (json/read-str (get response :body)) "success")]
             [true] (handler request)
-            [false] (println "Something went wrong")))))))
+            [false] (response/not-found {:status 404 :headers {} :body "unathorized"})))))))
 
 (def app
   (-> app-routes
