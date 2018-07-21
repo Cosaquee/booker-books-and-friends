@@ -8,7 +8,8 @@
                  [ring/ring-defaults "0.2.1"]]
   :plugins [[lein-ring "0.9.7"]
             [cider/cider-nrepl "0.17.0-SNAPSHOT"]
-            [refactor-nrepl "2.4.0-SNAPSHOT"]]
+            [refactor-nrepl "2.4.0-SNAPSHOT"]
+            [lein-cljfmt "0.6.0"]]
   :ring {:handler booker-books.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
