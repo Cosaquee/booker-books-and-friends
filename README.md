@@ -1,4 +1,5 @@
 # booker-books
+# ABANDONED in favor of monolitic application [Booker](https://github.com/Cosaquee/booker)
 
 Clojure service with Neo4j as database. Part of Booker responsible for books and authors.
 
